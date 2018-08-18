@@ -16,5 +16,8 @@
     "eject": "react-scripts eject",
     "predeploy": "react-scripts build",
     "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "prettier": "1.14.2"
   }
 }
