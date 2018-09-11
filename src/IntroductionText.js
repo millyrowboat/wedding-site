@@ -1,27 +1,51 @@
-import React from 'react';
+import React from "react";
 import injectSheet from "react-jss";
 
 const styles = {
-  text: {
-    padding: 20,
-  },
-  content: {
-    fontSize: '2rem',
-    color: 'white'
-  }
-} 
+    text: {
+        padding: "20px 40px",
+        textAlign: "center"
+    },
+    content: {
+        fontSize: "2rem",
+        color: "white"
+    },
+    heroText: {
+        fontSize: "3.5rem",
+        display: "block",
+        padding: "0 0 20px 0",
+        fontWeight: "700"
+    },
+    secondaryText: {
+        "font-size": "1.5rem",
+        "display": "block",
+        "line-height": "1.5"
+    },
+    button: {
+        "margin-top": "20px",
+        "width": "50%",
+        "font-size": "1rem",
+        "padding": "10px",
+        "background-color": "#ffffff",
+        "font-family": "Cormorant Garamond, serif",
+        "border": "none",
+        "border-radius": "5px"
+    }
+};
 
+const Text = ({ classes }) => {
+  return (
+    <div className={classes.text}>
+      <div className={classes.content}>
+          <span className={classes.heroText}>Hello, friends and family. </span>
 
-const Text = ({classes}) => {
-  return(
-   <div className={classes.text}>
-      <span className={classes.content}>
-        Hello friends and family. You're invited to Bec and Milly's party
-        where some legal stuff just so happens to get read out and
-        officiated and stuff.
-      </span>
+          <span className={classes.secondaryText}>You're invited to Bec and Milly's party where
+        some legal stuff just so happens to get read out and officiated and
+        stuff.</span>
+        <button className={classes.button}> RVSP </button>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export const IntroductionText = injectSheet(styles)(Text);
+export default injectSheet(styles)(Text);
