@@ -5,6 +5,7 @@ const styles = {
     button: props => ({
         "margin-top": "20px",
         "width": props.width,
+        "height": props.height,
         "font-size": "1rem",
         "padding": "10px",
         "background-color": "#ffffff",
@@ -14,8 +15,8 @@ const styles = {
     })
 }
 
-const Button = ({classes, children, onClick }) => {
-    return (<button onClick={onClick} className={classes.button}>{children}</button> )
+const Button = ({classes, children, action }) => {
+    return (<button onClick={action} className={classes.button}>{children}</button> )
 };
 
 export const FancyButton = injectSheet(styles)(Button);

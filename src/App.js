@@ -42,7 +42,8 @@ const styles = {
         position: "static",
         margin: "40px",
         height: "400px",
-        backgroundColor: "white"
+        backgroundColor: "white",
+        padding: "20px 40px"
     },
     overlay: {
         display: "flex",
