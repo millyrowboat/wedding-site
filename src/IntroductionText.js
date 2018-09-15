@@ -1,4 +1,5 @@
 import React from "react";
+import { FancyButton } from './Button';
 import injectSheet from "react-jss";
 
 const styles = {
@@ -21,19 +22,9 @@ const styles = {
         "display": "block",
         "line-height": "1.5"
     },
-    button: {
-        "margin-top": "20px",
-        "width": "50%",
-        "font-size": "1rem",
-        "padding": "10px",
-        "background-color": "#ffffff",
-        "font-family": "Cormorant Garamond, serif",
-        "border": "none",
-        "border-radius": "5px"
-    }
 };
 
-const Text = ({ classes }) => {
+const Text = ({ classes, openModal }) => {
   return (
     <div className={classes.text}>
       <div className={classes.content}>
@@ -42,7 +33,7 @@ const Text = ({ classes }) => {
           <span className={classes.secondaryText}>You're invited to Bec and Milly's party where
         some legal stuff just so happens to get read out and officiated and
         stuff.</span>
-        <button className={classes.button}> RVSP </button>
+        <FancyButton width={"50%"} onClick={openModal}> RVSP </FancyButton>
       </div>
     </div>
   );
