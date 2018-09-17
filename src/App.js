@@ -95,7 +95,7 @@ class App extends React.Component {
                 contentLabel="Invitation"
                 style={modalStyles}
             >
-                <ModalContent closeModal={this.closeModal} />
+                <ModalContent />
             </Modal>
             </div>
         );
