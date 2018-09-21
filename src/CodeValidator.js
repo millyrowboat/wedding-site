@@ -1,7 +1,6 @@
 import React from 'react';
 import injectSheet from 'react-jss';
-
-const CODE_WORD = "WEDDING";
+import firebase from 'firebase';
 
 const styles = {
     form: {
@@ -27,35 +26,41 @@ class CodeValidator extends React.Component {
         super(props)
         this.state = {
             code: '',
-            codeValid: false,
-            showInfo: false
+            loggedIn: false
         }
     }
 
     handleUserInput(e) {
         console.log("User input:", e.target.value);
         const value = e.target.value;
-        this.setState({code: value}, () => { this.validateCode(value) });
+        this.setState({code: value});
     };
 
-    validateCode(value) {
-        var match = new RegExp(CODE_WORD);
-        let codeIsValid = match.exec(value);
-        this.setState({codeValid: !!codeIsValid}, this.validateForm)
-        console.log("Is the code valid?", codeIsValid);
+    attemptLogIn(value) {
+        firebase.auth().signInWithEmailAndPassword("milly.rowett@gmail.com", value).then(() => {
+            console.log("Username and password were correct")
+            this.validateForm();
+        }, error => {
+            console.log(error.message, error.code);
+        });
     };
 
     validateForm() {
-        this.props.formComplete();
-        console.log("State is", this.state);
+        if (firebase.auth().currentUser) {
+            this.setState({loggedIn: true});
+            this.props.formComplete(this.state.loggedIn);
+            console.log("State is", this.state);
+        } else {
+            this.setState({loggedIn: false});
+            console.log("State is", this.state);
+        }
     }
 
     render() {
         const { classes } = this.props;
         return(
-            <form>
                 <div className={classes.form}>
-                    <label className={classes.label}>Code:</label>
+                    <label className={classes.label}>Codeword:</label>
                     <input
                         type="text"
                         id="code"
@@ -63,8 +68,8 @@ class CodeValidator extends React.Component {
                         value={this.state.code}
                         onChange={(event) => this.handleUserInput(event)}
                     />
+                    <button onClick={() => this.attemptLogIn(this.state.code)}>Go</button>
                 </div>
-            </form>
         )
     };
 }
