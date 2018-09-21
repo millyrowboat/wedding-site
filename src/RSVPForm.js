@@ -1,6 +1,7 @@
 import React from 'react';
 import injectSheet from 'react-jss';
 import { FancyButton } from './Button';
+import firebase from 'firebase';
 
 const styles = {
     form: {
@@ -32,6 +33,33 @@ const styles = {
 class RSVPForm extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            name: '',
+            attendance: '',
+            plusOne: ''
+        }
+    };
+
+    formComplete = () => {
+        firebase.database().ref(`rsvps/${this.state.name}`).push().set({
+            name: this.state.name,
+            attending: this.state.attendance,
+            withSomeone: this.state.plusOne
+        }, error => {
+            if (error) {
+                console.log(error.message, error.code);
+            } else {
+                console.log("Wrote successfully to the database!");
+            }
+        });
+    };
+
+    handleChange = (event) => {
+        const target = event.target;
+        this.setState({
+            [target.name]: target.value
+        });
+        console.log("Form state:", this.state);
     }
 
     render() {
@@ -40,21 +68,21 @@ class RSVPForm extends React.Component {
             <div className={classes.form}>
                 <div className={classes.row}>
                     <p className={classes.question}>Your name:</p>
-                    <input type="text" name="name"/>
+                    <input type="text" value={this.state.name} onChange={this.handleChange} name="name"/>
                 </div>
 
                 <div className={classes.row}>
                     <p className={classes.question}>Can you come? </p>
                     <label>
-                        <input type="radio" name="attendance" value="yes"/>
+                        <input type="radio" name="attendance" onChange={this.handleChange} value="yes"/>
                         Yes, I will be there with bells on
                     </label>
                     <label>
-                        <input type="radio" name="attendance" value="no"/>
+                        <input type="radio" name="attendance" onChange={this.handleChange} value="no"/>
                         No, but I'll catch up in Melbourne!
                     </label>
                     <label>
-                        <input type="radio" name="attendance" value="maybe"/>
+                        <input type="radio" name="attendance" onChange={this.handleChange} value="maybe"/>
                         Don't know yet
                     </label>
                 </div>
@@ -62,15 +90,15 @@ class RSVPForm extends React.Component {
                 <div className={classes.row}>
                     <p className={classes.question}>You bringin' someone?</p>
                     <label>
-                        <input type="radio" name="plusones" value="yes"/>
+                        <input type="radio" name="plusOne" onChange={this.handleChange} value="yes"/>
                         Hell yeah
                     </label>
                     <label>
-                        <input type="radio" name="plusones" value="no"/>
+                        <input type="radio" name="plusOne" onChange={this.handleChange} value="no"/>
                         Nah
                     </label>
                 </div>
-                <FancyButton showBorder={true} width="100%" height="40px"> Count me in! </FancyButton>
+                <FancyButton showBorder={true} width="100%" height="40px" action={this.formComplete}> Count me in! </FancyButton>
             </div>
         )
     }
