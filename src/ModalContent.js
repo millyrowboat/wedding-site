@@ -1,6 +1,7 @@
 import React from 'react';
 import injectSheet from 'react-jss';
 import CodeValidator from './CodeValidator';
+import RSVPForm from './RSVPForm';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
@@ -9,8 +10,14 @@ const styles = {
         fontFamily: 'Cormorant Garamond, serif',
         textAlign: "center"
     },
-    'h2': {
+    innerContent: {
+        textAlign: "left"
+    },
+    noSpace: {
         margin: 0
+    },
+    centered: {
+        textAlign: "center"
     }
 }
 
@@ -49,10 +56,16 @@ class ModalContent extends React.Component {
                         )
                     :(
                         <div className={classes.innerContent}>
-                            <p>Cool! That's the one. I suppose you want details now? </p>
                             <p><strong>Date: </strong>19th of January 2019</p>
-                            <p><strong>Location: </strong>"Winton" 987 Midland Highway, Pontville, TAS 7030 </p>
-                            <p><strong>If you can come, please RVSP here:</strong></p>
+                            <p><strong>Location: </strong>987 Midland Highway, Pontville, TAS 7030 </p>
+                            <p><strong>Time: </strong>Official 'ceremony' starts at 1pm</p>
+                            <p>Cool! That's the one. I suppose you want details now?
+                                So it'll be at a property in Tasmania. It'll be really chill.
+                                There'll be food provided but please arrange your own accomodation if
+                                if you plan to stay overnight. You can bring a tent and bedding if you want
+                                to camp on the property (but spots are limited!).</p>
+                            <h2>Cool, so if you can come, please fill out this form: </h2>
+                            <RSVPForm />
                         </div>
                     )
                     }

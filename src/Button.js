@@ -3,14 +3,13 @@ import injectSheet from "react-jss";
 
 const styles = {
     button: props => ({
-        "margin-top": "20px",
         "width": props.width,
         "height": props.height,
         "font-size": "1rem",
         "padding": "10px",
         "background-color": "#ffffff",
         "font-family": "Cormorant Garamond, serif",
-        "border": "none",
+        "border": props.showBorder ? "1px gray solid" : "none",
         "border-radius": "5px"
     })
 }

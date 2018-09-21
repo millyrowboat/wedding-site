@@ -1,23 +1,35 @@
 import React from 'react';
 import injectSheet from 'react-jss';
 import firebase from 'firebase';
+import { FancyButton } from './Button';
 
 const styles = {
     form: {
         display: "flex",
-        fontSize: "1.5rem",
-        height: "30px",
-        justifyContent: "center"
+        fontSize: "1.2rem",
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    '@media (max-width: 450px)': {
+        form: {
+            flexDirection: "column"
+        }
     },
     label: {
-        marginRight: "15px"
+        margin: "0 15px 0 0"
+    },
+    inputConstrainer: {
+        flexGrow: 1,
+        display: "flex"
     },
     input: {
         border: "1px solid gray",
         fontFamily: "Cormorant Garamond, serif",
         fontSize: "1rem",
         letterSpacing: ".03rem",
-        padding: "5px"
+        flexGrow: 1,
+        padding: "5px",
+        marginRight: "10px"
     }
 }
 
@@ -37,6 +49,7 @@ class CodeValidator extends React.Component {
     };
 
     attemptLogIn(value) {
+        console.log("did i get here");
         firebase.auth().signInWithEmailAndPassword("milly.rowett@gmail.com", value).then(() => {
             console.log("Username and password were correct")
             this.validateForm();
@@ -61,14 +74,16 @@ class CodeValidator extends React.Component {
         return(
                 <div className={classes.form}>
                     <label className={classes.label}>Codeword:</label>
-                    <input
-                        type="text"
-                        id="code"
-                        className={classes.input}
-                        value={this.state.code}
-                        onChange={(event) => this.handleUserInput(event)}
-                    />
-                    <button onClick={() => this.attemptLogIn(this.state.code)}>Go</button>
+                    <div className={classes.inputConstrainer}>
+                        <input
+                            type="text"
+                            id="code"
+                            className={classes.input}
+                            value={this.state.code}
+                            onChange={(event) => this.handleUserInput(event)}
+                        />
+                        <FancyButton showBorder={true} width="20%" height="100%" action={() => this.attemptLogIn(this.state.code)}>Go</FancyButton>
+                    </div>
                 </div>
         )
     };

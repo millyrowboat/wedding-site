@@ -41,7 +41,6 @@ const styles = {
         maxWidth: "500px",
         position: "static",
         margin: "40px",
-        height: "400px",
         backgroundColor: "white",
         padding: "20px 40px"
     },
@@ -73,7 +72,6 @@ class App extends React.Component {
     };
 
     openModal = () => {
-        console.log("Modal opened!", this.state);
         this.setState({modalIsOpen: true});
     };
 
