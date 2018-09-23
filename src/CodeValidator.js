@@ -16,20 +16,21 @@ const styles = {
         }
     },
     label: {
-        margin: "0 15px 0 0"
+        margin: "0 3% 0 0"
     },
     inputConstrainer: {
         flexGrow: 1,
-        display: "flex"
-    },
-    input: {
-        border: "1px solid gray",
-        fontFamily: "Cormorant Garamond, serif",
-        fontSize: "1rem",
-        letterSpacing: ".03rem",
-        flexGrow: 1,
-        padding: "5px",
-        marginRight: "10px"
+        display: "flex",
+        '& input': {
+            border: "1px solid gray",
+            fontFamily: "Cormorant Garamond, serif",
+            fontSize: "1rem",
+            letterSpacing: ".03rem",
+            flexGrow: 1,
+            padding: "5px",
+            marginRight: "5%",
+            width: "75%"
+        }
     }
 }
 
