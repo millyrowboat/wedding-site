@@ -34,7 +34,7 @@ const Text = ({ classes, openModal }) => {
           <span className={classes.secondaryText}>You're invited to Bec and Milly's party where
         some legal stuff just so happens to get read out and officiated and
         stuff.</span>
-        <FancyButton showBorder={false} width={"50%"} height={"40px"} action={openModal}> RVSP </FancyButton>
+        <FancyButton showBorder={false} padding="10px" width={"50%"} height={"40px"} action={openModal}> RVSP </FancyButton>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ const styles = {
         "width": props.width,
         "height": props.height,
         "font-size": "1rem",
-        "padding": "10px",
+        "padding": props.padding,
         "background-color": "#ffffff",
         "font-family": "Cormorant Garamond, serif",
         "border": props.showBorder ? "1px gray solid" : "none",
