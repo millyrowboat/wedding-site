@@ -19,6 +19,13 @@ const styles = {
     },
     centered: {
         textAlign: "center"
+    },
+    troubleshoot: {
+        display: "block",
+        width: "100%",
+        textAlign: "center",
+        textDecoration: "none",
+        color: "black"
     }
 }
 
@@ -43,17 +50,15 @@ class ModalContent extends React.Component {
 
     rsvpComplete = () => {
         this.setState({rsvpComplete: true});
-        console.log("RSVP COMPLETE", this.state.rsvpComplete);
         localStorage.setItem("completed", true);
     };
 
     switchInformation = (isLoggedIn) => {
-        console.log("Is logged in?", isLoggedIn);
         isLoggedIn && this.setState({showInformation: true, title: `Cool cool. Here's the details`});
     };
 
     render() {
-        const { classes, rsvpComplete } = this.props;
+        const { classes } = this.props;
         const defaultText = "Cool, so if you can come, please fill out this form:";
         const completedText = "Thanks! Hope to see you soon either way.";
         return(
@@ -81,6 +86,12 @@ class ModalContent extends React.Component {
                                 to camp on the property (but spots are limited!).</p>
                             <h2 className={classes.centered}>{!this.state.rsvpComplete ? defaultText : completedText}</h2>
                             {!this.state.rsvpComplete ? <RSVPForm rsvpComplete={() => this.rsvpComplete()}/> : null }
+                            {this.state.rsvpComplete? <a 
+                                className={classes.troubleshoot}
+                                href="mailto:milly.rowett@gmail.com">
+                                Didn't work? Questions? Please contact us!
+                                    </a> : null
+                            }
                         </div>
                     )
                     }

@@ -62,7 +62,6 @@ class RSVPForm extends React.Component {
                     console.log(error.message, error.code);
                 } else {
                     this.props.rsvpComplete()
-                    console.log("Wrote successfully to the database!");
                 }
     }) 
         : this.setState({inputError:true});
@@ -73,7 +72,6 @@ class RSVPForm extends React.Component {
         this.setState({
             [target.name]: target.value
         });
-        console.log("Form state:", this.state);
     };
 
     render() {
