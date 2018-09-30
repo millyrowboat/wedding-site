@@ -4,8 +4,7 @@ import injectSheet from 'react-jss';
 const styles = {
     errorContainer: {
         overflow: "hidden",
-        width: "100%",
-        height: 40
+        width: "100%"
     },
     errorMessage: {
         color: "red",
