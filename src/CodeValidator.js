@@ -2,6 +2,7 @@ import React from 'react';
 import injectSheet from 'react-jss';
 import firebase from 'firebase';
 import { FancyButton } from './Button';
+import ErrorMessage from './ErrorMessage';
 
 const styles = {
     form: {
@@ -39,22 +40,21 @@ class CodeValidator extends React.Component {
         super(props)
         this.state = {
             code: '',
-            loggedIn: false
+            loggedIn: false,
+            inputError: false
         }
     }
 
     handleUserInput(e) {
-        console.log("User input:", e.target.value);
         const value = e.target.value;
         this.setState({code: value});
     };
 
     attemptLogIn(value) {
-        console.log("did i get here");
         firebase.auth().signInWithEmailAndPassword("milly.rowett@gmail.com", value).then(() => {
-            console.log("Username and password were correct")
             this.validateForm();
         }, error => {
+            this.setState({inputError: true});
             console.log(error.message, error.code);
         });
     };
@@ -63,16 +63,15 @@ class CodeValidator extends React.Component {
         if (firebase.auth().currentUser) {
             this.setState({loggedIn: true});
             this.props.formComplete(this.state.loggedIn);
-            console.log("State is", this.state);
         } else {
             this.setState({loggedIn: false});
-            console.log("State is", this.state);
         }
     }
 
     render() {
         const { classes } = this.props;
         return(
+            <div>
                 <div className={classes.form}>
                     <label className={classes.label}>Codeword:</label>
                     <div className={classes.inputConstrainer}>
@@ -83,9 +82,14 @@ class CodeValidator extends React.Component {
                             value={this.state.code}
                             onChange={(event) => this.handleUserInput(event)}
                         />
-                        <FancyButton showBorder={true} width="20%" height="100%" action={() => this.attemptLogIn(this.state.code)}>Go</FancyButton>
+                        <FancyButton showBorder={true} width="20%" height="auto" action={() => this.attemptLogIn(this.state.code)}>Go</FancyButton>
                     </div>
                 </div>
+                <ErrorMessage 
+                    message={"Uh, that's not right. Did you look on the invitation?"}
+                    show={this.state.inputError}
+                />
+            </div>
         )
     };
 }

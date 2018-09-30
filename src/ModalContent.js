@@ -5,6 +5,7 @@ import RSVPForm from './RSVPForm';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+const localStorage = window.localStorage;
 const styles = {
     content: {
         fontFamily: 'Cormorant Garamond, serif',
@@ -26,13 +27,25 @@ class ModalContent extends React.Component {
         super(props)
         this.state = {
             showInformation: false,
-            title: 'Oh so you wanna come do ya?'
+            title: 'Oh so you wanna come do ya?',
+            rsvpComplete: false
         }
     };
 
     componentDidMount() {
         this.setState({showInformation: firebase.auth().currentUser});
-    }
+        if(localStorage.getItem("completed")) {
+            this.setState({rsvpComplete: true})
+        } else {
+            this.setState({rsvpComplete: false})
+        }
+    };
+
+    rsvpComplete = () => {
+        this.setState({rsvpComplete: true});
+        console.log("RSVP COMPLETE", this.state.rsvpComplete);
+        localStorage.setItem("completed", true);
+    };
 
     switchInformation = (isLoggedIn) => {
         console.log("Is logged in?", isLoggedIn);
@@ -40,11 +53,13 @@ class ModalContent extends React.Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, rsvpComplete } = this.props;
+        const defaultText = "Cool, so if you can come, please fill out this form:";
+        const completedText = "Thanks! Hope to see you soon either way.";
         return(
             <div className={classes.content} >
                 <div className={classes.header}>
-                    <h2 className={classes.h2}>{this.state.title}</h2>
+                    <h2 className={classes.noSpace}>{this.state.title}</h2>
                 </div>
                     {!this.state.showInformation ? (
                         <div className={classes.innerContent}>
@@ -64,8 +79,8 @@ class ModalContent extends React.Component {
                                 There'll be food provided but please arrange your own accomodation if
                                 if you plan to stay overnight. You can bring a tent and bedding if you want
                                 to camp on the property (but spots are limited!).</p>
-                            <h2>Cool, so if you can come, please fill out this form: </h2>
-                            <RSVPForm />
+                            <h2 className={classes.centered}>{!this.state.rsvpComplete ? defaultText : completedText}</h2>
+                            {!this.state.rsvpComplete ? <RSVPForm rsvpComplete={() => this.rsvpComplete()}/> : null }
                         </div>
                     )
                     }

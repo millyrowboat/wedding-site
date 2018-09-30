@@ -5,6 +5,8 @@ import IntroductionText from './IntroductionText';
 import ModalContent from './ModalContent';
 import Modal from 'react-modal';
 
+const localStorage = window.localStorage;
+
 const styles = {
     app: {
         width: '100%',
@@ -42,12 +44,26 @@ const styles = {
         position: "static",
         margin: "40px",
         backgroundColor: "white",
-        padding: "20px 40px"
+        padding: "40px"
     },
     overlay: {
         display: "flex",
         justifyContent: "center",
         backgroundColor: "rgba(49, 49, 49, 0.75)"
+    },
+    troubleshooter: {
+        position: "absolute",
+        width: "30%",
+        bottom: 0,
+        right: 0,
+        textAlign: "right",
+        padding: 20,
+        '& a': {
+            color: "white",
+            textDecoration: "none",
+            fontSize: "0.9rem",
+            lineHeight: "0.9rem"
+        }
     }
 };
 
@@ -67,9 +83,19 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalIsOpen: false
+            modalIsOpen: false,
+            rsvpComplete: false
         };
     };
+
+    componentDidMount() {
+        const completed = localStorage.getItem("completed");
+        if ( completed ) { 
+            this.setState({rsvpComplete: true}) 
+        } else { 
+            this.setState({rsvpComplete: false})
+        }
+    }
 
     openModal = () => {
         this.setState({modalIsOpen: true});
@@ -85,7 +111,12 @@ class App extends React.Component {
             <div className={classes.app}>
             <div className={classes.coverPhoto} />
             <ContentWrapper classes={classes}>
-                <IntroductionText openModal={this.openModal} />
+                <IntroductionText rsvpComplete={this.state.rsvpComplete} openModal={this.openModal} />
+                <div className={classes.troubleshooter}>
+                    <a target="_blank" rel="noopener noreferrer" href="mailto:milly.rowett@gmail.com?subject=Wedding">
+                        Having trouble? Click here to contact us!
+                    </a>
+                </div>
             </ContentWrapper>
             <Modal 
                 isOpen={this.state.modalIsOpen} 

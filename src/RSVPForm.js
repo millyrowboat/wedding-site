@@ -1,6 +1,7 @@
 import React from 'react';
 import injectSheet from 'react-jss';
 import { FancyButton } from './Button';
+import ErrorMessage from './ErrorMessage';
 import firebase from 'firebase';
 
 const styles = {
@@ -29,22 +30,6 @@ const styles = {
             height: 30
         }
     },
-    errorContainer: {
-        overflow: "hidden",
-        width: "100%",
-        height: 40
-    },
-    errorMessage: {
-        color: "red",
-        opacity: 0,
-        margin: 0,
-        transform: "translateY(-100px)"
-    },
-    errorMessageShow: {
-        opacity: 100,
-        transition: "all 0.3s ease-in",
-        transform: "translateY(0)"
-    }
 }
 
 
@@ -55,15 +40,8 @@ class RSVPForm extends React.Component {
             name: '',
             attendance: '',
             plusOne: '',
-            inputError: true,
+            inputError: false,
             formComplete: false,
-            errorMessage: ''
-        }
-    };
-
-    onComponentDidMount() {
-        if(this.state.formComplete && this.state.inputError) {
-            this.displayInputError()
         }
     };
 
@@ -83,9 +61,11 @@ class RSVPForm extends React.Component {
                 if (error) {
                     console.log(error.message, error.code);
                 } else {
+                    this.props.rsvpComplete()
                     console.log("Wrote successfully to the database!");
                 }
-            }) : this.setState({inputError:true, errorMessage: "Oops, you have to fill all the fields out!"});
+    }) 
+        : this.setState({inputError:true});
     };
 
     handleChange = (event) => {
@@ -132,10 +112,8 @@ class RSVPForm extends React.Component {
                         Nah
                     </label>
                 </div>
-                <div className={classes.errorContainer}>
-                    <p className={`${classes.errorMessage} ${this.state.errorMessage && classes.errorMessageShow}`}>{this.state.errorMessage}</p>
-                </div>
                 <FancyButton showBorder={true} width="100%" height="40px" action={this.formSubmit}> Count me in! </FancyButton>
+                <ErrorMessage message="Oops! You have to fill in all the fields" show={this.state.inputError} />
             </div>
         )
     }
