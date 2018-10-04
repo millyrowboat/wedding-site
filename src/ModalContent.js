@@ -83,7 +83,8 @@ class ModalContent extends React.Component {
                                 So it'll be at a property in Tasmania. It'll be really chill.
                                 There'll be food provided but please arrange your own accomodation if
                                 if you plan to stay overnight. You can bring a tent and bedding if you want
-                                to camp on the property (but spots are limited!).</p>
+                                to camp on the property (spots are limited,
+                                so please let us know if you want to do this!).</p>
                             <h2 className={classes.centered}>{!this.state.rsvpComplete ? defaultText : completedText}</h2>
                             {!this.state.rsvpComplete ? <RSVPForm rsvpComplete={() => this.rsvpComplete()}/> : null }
                             {this.state.rsvpComplete? <a 
